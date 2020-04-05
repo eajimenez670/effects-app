@@ -11,9 +11,19 @@ export class UsuariosService {
   constructor(private http: HttpClient) {}
 
   getUsers() {
-    let params: HttpParams = new HttpParams().set("per_page", "6");
+    let params: HttpParams = new HttpParams()
+      .set("per_page", "6")
+      .set("delay", "5");
 
     return this.http.get(`${this.url}/users`, { params }).pipe(
+      map(resp => {
+        return resp["data"];
+      })
+    );
+  }
+
+  getUserById(id: string) {
+    return this.http.get(`${this.url}/users/${id}`).pipe(
       map(resp => {
         return resp["data"];
       })
